@@ -1,0 +1,754 @@
+<!-- ========================================= -->
+<!-- TELA DE LOGIN + SISTEMA BRINQUEDOTECA -->
+<!-- HTML + CSS + JAVASCRIPT -->
+<!-- ========================================= -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Brinquedoteca Manager</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+  background:url('https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1974&auto=format&fit=crop') no-repeat center center/cover;
+  min-height:100vh;
+}
+
+/* OVERLAY */
+
+.overlay{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(255,255,255,0.82);
+  z-index:0;
+}
+
+/* LOGIN */
+
+.login-screen{
+  position:relative;
+  z-index:2;
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.login-box{
+  width:100%;
+  max-width:420px;
+  background:white;
+  padding:40px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  animation:fadeIn 1s ease;
+}
+
+.login-logo{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.login-logo i{
+  font-size:60px;
+  color:#ff9800;
+  margin-bottom:10px;
+}
+
+.login-logo h1{
+  color:#444;
+}
+
+.login-box form{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.login-box input{
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  outline:none;
+  font-size:15px;
+}
+
+.login-btn{
+  background:#ff7043;
+  color:white;
+  border:none;
+  padding:14px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:bold;
+  transition:.3s;
+}
+
+.login-btn:hover{
+  background:#f4511e;
+  transform:scale(1.03);
+}
+
+/* SISTEMA */
+
+.system{
+  display:none;
+  position:relative;
+  z-index:2;
+}
+
+.container{
+  display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:260px;
+  min-height:100vh;
+  background:#ffd54f;
+  padding:25px;
+  box-shadow:4px 0 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:40px;
+}
+
+.logo i{
+  font-size:30px;
+  color:#ff7043;
+}
+
+.sidebar ul{
+  list-style:none;
+}
+
+.sidebar li{
+  padding:15px;
+  margin-bottom:10px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.3s;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:bold;
+  color:#444;
+}
+
+.sidebar li:hover,
+.sidebar .active{
+  background:#fff3cd;
+}
+
+/* MAIN */
+
+.main{
+  flex:1;
+  padding:30px;
+}
+
+/* TOPO */
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px;
+  gap:20px;
+}
+
+.search-box{
+  flex:1;
+  background:white;
+  padding:12px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.search-box input{
+  border:none;
+  outline:none;
+  width:100%;
+}
+
+/* BOTÕES */
+
+.btn{
+  background:#ff7043;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:.3s;
+}
+
+.btn:hover{
+  background:#f4511e;
+  transform:scale(1.03);
+}
+
+/* CARDS */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-bottom:30px;
+}
+
+.card{
+  background:white;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card i{
+  font-size:40px;
+  color:#ff7043;
+  margin-bottom:10px;
+}
+
+.card h2{
+  font-size:32px;
+  color:#333;
+}
+
+.card p{
+  color:#666;
+}
+
+/* SEÇÕES */
+
+.section{
+  background:white;
+  padding:25px;
+  border-radius:20px;
+  margin-bottom:25px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.section h2{
+  margin-bottom:20px;
+  color:#444;
+}
+
+/* FORM */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.form-grid input{
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+
+/* TABELAS */
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+table th{
+  background:#ffe082;
+  padding:14px;
+  text-align:left;
+}
+
+table td{
+  padding:14px;
+  border-bottom:1px solid #eee;
+}
+
+.status{
+  padding:6px 12px;
+  border-radius:20px;
+  color:white;
+  font-size:13px;
+}
+
+.available{
+  background:#4caf50;
+}
+
+.borrowed{
+  background:#ef5350;
+}
+
+/* API */
+
+.api-box{
+  display:flex;
+  gap:15px;
+  margin-top:20px;
+}
+
+.api-box input{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+
+.status-api{
+  margin-top:15px;
+  padding:12px;
+  border-radius:10px;
+  background:#ffe0e0;
+  color:#d32f2f;
+  font-weight:bold;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:900px){
+
+  .container{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    width:100%;
+    min-height:auto;
+  }
+
+  .topbar{
+    flex-direction:column;
+  }
+
+  .api-box{
+    flex-direction:column;
+  }
+
+}
+
+/* ANIMAÇÃO */
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<!-- ================================= -->
+<!-- LOGIN -->
+<!-- ================================= -->
+
+<section class="login-screen" id="loginScreen">
+
+  <div class="login-box">
+
+    <div class="login-logo">
+      <i class="fa-solid fa-puzzle-piece"></i>
+      <h1>Brinquedoteca</h1>
+      <p>Sistema de Gestão Infantil</p>
+    </div>
+
+    <form id="loginForm">
+
+      <input type="email" placeholder="E-mail" required>
+
+      <input type="password" placeholder="Senha" required>
+
+      <button class="login-btn" type="submit">
+        Entrar no Sistema
+      </button>
+
+    </form>
+
+  </div>
+
+</section>
+
+<!-- ================================= -->
+<!-- SISTEMA -->
+<!-- ================================= -->
+
+<section class="system" id="system">
+
+<div class="container">
+
+  <!-- MENU -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      <i class="fa-solid fa-puzzle-piece"></i>
+      <h2>Brinquedoteca</h2>
+    </div>
+
+    <ul>
+
+      <li class="active">
+        <i class="fa-solid fa-chart-line"></i>
+        Dashboard
+      </li>
+
+      <li>
+        <i class="fa-solid fa-cube"></i>
+        Brinquedos
+      </li>
+
+      <li>
+        <i class="fa-solid fa-child-reaching"></i>
+        Crianças
+      </li>
+
+      <li>
+        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        Empréstimos
+      </li>
+
+      <li>
+        <i class="fa-solid fa-plug"></i>
+        API
+      </li>
+
+    </ul>
+
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="main">
+
+    <!-- TOPO -->
+    <header class="topbar">
+
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Pesquisar brinquedos, crianças...">
+      </div>
+
+      <button class="btn">
+        <i class="fa-solid fa-plus"></i>
+        Novo Cadastro
+      </button>
+
+    </header>
+
+    <!-- CARDS -->
+    <section class="cards">
+
+      <div class="card">
+        <i class="fa-solid fa-cube"></i>
+        <h2>120</h2>
+        <p>Brinquedos</p>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-child"></i>
+        <h2>58</h2>
+        <p>Crianças</p>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        <h2>23</h2>
+        <p>Empréstimos</p>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-rotate-left"></i>
+        <h2>17</h2>
+        <p>Devoluções</p>
+      </div>
+
+    </section>
+
+    <!-- BRINQUEDOS -->
+    <section class="section">
+
+      <h2>
+        <i class="fa-solid fa-cube"></i>
+        Cadastro e Consulta de Brinquedos
+      </h2>
+
+      <div class="form-grid">
+
+        <input type="text" placeholder="Nome do brinquedo">
+
+        <input type="text" placeholder="Categoria">
+
+        <input type="number" placeholder="Quantidade">
+
+        <button class="btn">
+          Salvar
+        </button>
+
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Brinquedo</th>
+            <th>Categoria</th>
+            <th>Status</th>
+            <th>Quantidade</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>Quebra-Cabeça</td>
+            <td>Educativo</td>
+            <td>
+              <span class="status available">
+                Disponível
+              </span>
+            </td>
+            <td>10</td>
+          </tr>
+
+          <tr>
+            <td>Carrinho</td>
+            <td>Veículos</td>
+            <td>
+              <span class="status borrowed">
+                Emprestado
+              </span>
+            </td>
+            <td>2</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+    <!-- CRIANÇAS -->
+    <section class="section">
+
+      <h2>
+        <i class="fa-solid fa-child-reaching"></i>
+        Cadastro e Consulta de Crianças
+      </h2>
+
+      <div class="form-grid">
+
+        <input type="text" placeholder="Nome">
+
+        <input type="number" placeholder="Idade">
+
+        <input type="text" placeholder="Responsável">
+
+        <button class="btn">
+          Salvar
+        </button>
+
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Responsável</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>Ana Clara</td>
+            <td>7</td>
+            <td>Mariana</td>
+          </tr>
+
+          <tr>
+            <td>Pedro Lucas</td>
+            <td>9</td>
+            <td>Carlos</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+    <!-- EMPRÉSTIMOS -->
+    <section class="section">
+
+      <h2>
+        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        Controle de Empréstimos
+      </h2>
+
+      <div class="form-grid">
+
+        <input type="text" placeholder="Nome da criança">
+
+        <input type="text" placeholder="Brinquedo">
+
+        <input type="date">
+
+        <button class="btn">
+          Registrar
+        </button>
+
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Criança</th>
+            <th>Brinquedo</th>
+            <th>Data</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>Ana Clara</td>
+            <td>Boneca</td>
+            <td>15/05/2026</td>
+            <td>
+              <span class="status borrowed">
+                Emprestado
+              </span>
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+    <!-- API -->
+    <section class="section">
+
+      <h2>
+        <i class="fa-solid fa-plug"></i>
+        Configuração da API
+      </h2>
+
+      <div class="api-box">
+
+        <input
+        type="text"
+        id="apiUrl"
+        placeholder="Digite a URL da API">
+
+        <button class="btn" id="connectBtn">
+          Conectar
+        </button>
+
+      </div>
+
+      <div class="status-api" id="apiStatus">
+        Status: Desconectado
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+</section>
+
+<script>
+
+/* LOGIN */
+
+const loginForm = document.getElementById("loginForm");
+const loginScreen = document.getElementById("loginScreen");
+const system = document.getElementById("system");
+
+loginForm.addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  loginScreen.style.display = "none";
+  system.style.display = "block";
+
+});
+
+/* API 
+
+const connectBtn = document.getElementById("connectBtn");
+const apiUrl = document.getElementById("apiUrl");
+const apiStatus = document.getElementById("apiStatus");
+
+connectBtn.addEventListener("click", function(){
+
+  if(apiUrl.value.trim() === ""){
+
+    apiStatus.innerHTML = "Status: Informe a URL da API";
+    apiStatus.style.background = "#ffe0e0";
+    apiStatus.style.color = "#d32f2f";
+
+    return;
+
+  }
+
+  apiStatus.innerHTML = "Status: API conectada com sucesso";
+  apiStatus.style.background = "#dcedc8";
+  apiStatus.style.color = "#2e7d32";
+
+});*/
+
+</script>
+
+</body>
+</html>
